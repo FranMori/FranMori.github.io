@@ -1,6 +1,9 @@
+// Fonction qui permet d'ajouter la classe responsive et rendre effectif le menu "burger" dans la navigation
+
 function editNav() {
   var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
+  let width = document.documentElement.clientWidth || window.innerWidth
+  if (x.className === "topnav" && width <= 768) {
     x.className += " responsive";
   } else {
     x.className = "topnav";
