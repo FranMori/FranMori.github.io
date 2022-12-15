@@ -1,8 +1,5 @@
-// Fonction qui permet d'ajouter la classe responsive et rendre effectif le menu "burger" dans la navigation
-
 function editNav() {
   var x = document.getElementById("myTopnav");
-  let width = document.documentElement.clientWidth || window.innerWidth
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
@@ -10,112 +7,120 @@ function editNav() {
   }
 }
 
-
-
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
-// Lien entre les for et les valeurs des locations
-
-// const locations = document.getElementsByClassName('checkbox-label')
-
-// locations.for = locations.value
-
-// Récupération des inputs et création de form data
+// Récupération des inputs et des messages d'erreurs
 const firstNameInput = document.getElementById('first')
 const lastNameInput = document.getElementById('last')
 const emailInput = document.getElementById('email')
 const dateInput = document.getElementById('birthdate')
 const quantityInput = document.getElementById('quantity')
 const radioInput = document.querySelectorAll('input[type=radio]')
-const radio = document.getElementById('location1')
 const conditionsInput = document.getElementById('checkbox1')
 
-// Création d'un event listener sur le submit btn
-let checked = false
-const submitBtn = document.getElementById('submit')
-submitBtn.addEventListener("click", (event) => {
+const formObject = {
+  first : firstNameInput,
+  last : lastNameInput,
+  email : emailInput,
+  date : dateInput,
+  quantity : quantityInput,
+  radio : radioInput,
+  conditions : conditionsInput
+}
 
-  for (let i = 0; i < radioInput.length; i ++) {
-    if(radioInput[i].checked) {
-      checked = true
+const firstError = document.getElementById('firstError')
+const lastError = document.getElementById('lastError')
+const emailError = document.getElementById('emailError')
+const dateError = document.getElementById('dateError')
+const quantityError = document.getElementById('quantityError')
+const radioError = document.getElementById('radioError')
+const conditionsError = document.getElementById('conditionsError')
+
+const errorObject = {
+  firstError : firstError,
+  lastError : lastError,
+  emailError : emailError,
+  dateError : dateError,
+  quantityError : quantityError,
+  radioError : radioError,
+  conditionsError : conditionsError
+}
+
+
+// Ajout d'un event listener sur le bouton submit pour checker les valeurs du form
+let data = []
+
+  const submitBtn = document.getElementById('submit')
+submitBtn.addEventListener("click", (event) => {
+  data = []
+  if (formObject.first.value.length < 2) {
+    errorObject.firstError.textContent = "Veuillez entrer un prénom avec au minimum 2 caractères"
+  } else {
+    errorObject.firstError.textContent = ""
+    data.push(formObject.first.value)
+  }
+  if (formObject.last.value.length < 2) {
+    errorObject.lastError.textContent = "Veuillez entrer un nom avec au minimum 2 caractères"
+  } else {
+    errorObject.lastError.textContent = ""
+    data.push(formObject.last.value)
+  }
+  if (!formObject.email.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    errorObject.emailError.textContent = "Veuillez entrer une adresse email valide"
+  } else {
+    errorObject.emailError.textContent = ""
+    data.push(formObject.email.value)
+
+  }
+  if (formObject.date.value.length == 0) {
+    errorObject.dateError.textContent = "Veuillez entrer une date de naissance valide"
+  } else {
+    errorObject.dateError.textContent = ""
+    data.push(formObject.date.value)
+
+  }
+  if (formObject.quantity.value.length == 0 || formObject.quantity.value < 0 || formObject.quantity.value > 99) {
+    errorObject.quantityError.textContent = "Veuillez entrer une quantité de tournois entre 0 et 99"
+  } else {
+    errorObject.quantityError.textContent = ""
+    data.push(formObject.quantity.value)
+
+  }
+  let checkedValue = []
+  for (let i = 0; i < formObject.radio.length; i ++) {
+    if (formObject.radio[i].checked) {
+      checkedValue.push(formObject.radio[i].value)
     }
   }
-  if (!checked) {
-    radio.setCustomValidity("Veuillez choisir une ville")
-    radio.reportValidity()
+  if (checkedValue.length == 0) {
+    errorObject.radioError.textContent = "Veuillez sélectionner une ville"
   } else {
-    radio.setCustomValidity("")
+    errorObject.radioError.textContent = ""
+    data.push(checkedValue)
+
   }
+  if (!formObject.conditions.checked) {
+    errorObject.conditionsError.textContent = "Veuillez accepter les conditions d'utilisation"
+  } else {
+    errorObject.conditionsError.textContent = ""
+    data.push(formObject.conditions.value)
+
+  }
+ 
+  console.log(data)
+  if (data.length == 7) {
+    if (window.confirm("Merci pour votre inscription !")) {
+      closeModal()
+    }
+  }
+  // if ((errorObject.firstError.textContent = "") && (errorObject.lastError.textContent = "") && (errorObject.emailError.textContent = "") && (errorObject.dateError.textContent = "") && (errorObject.quantityError.textContent = "") && (errorObject.radioError.textContent = "") && (errorObject.conditionsError.textContent = "")) {
+  //   alert("Merci pour votre inscription !")
+  // }
 })
 
-
-
-// Event listeners sur les inputs
-// Prénom :
-firstNameInput.addEventListener("input", (event) => {
-  if (firstNameInput.validity.tooShort) {
-    firstNameInput.setCustomValidity("Veuillez entrer un prénom avec au minimum 2 caractères")
-    firstNameInput.reportValidity()
-  } else {
-    firstNameInput.setCustomValidity("")
-  }
-})
-
-// Nom :
-
-lastNameInput.addEventListener("input", (event) => {
-  if (lastNameInput.validity.tooShort) {
-    lastNameInput.setCustomValidity("Veuillez entrer un nom avec au minimum 2 caractères")
-    lastNameInput.reportValidity()
-  } else {
-    lastNameInput.setCustomValidity("")
-  }
-})
-// Email :
-
-emailInput.addEventListener("input", (event) => {
-  if (emailInput.validity.typeMismatch) {
-    emailInput.setCustomValidity("Veuillez entrer une adresse email valide")
-    emailInput.reportValidity()
-  } else {
-    emailInput.setCustomValidity("")
-  }
-})
-
-// Quantité de tournois :
-
-quantityInput.addEventListener("input", (event) => {
-  if (quantityInput.validity.rangeOverflow) {
-    quantityInput.setCustomValidity("Veuillez entrer une quantité inférieure à 100")
-    quantityInput.reportValidity()
-  } else if (quantityInput.validity.rangeUnderflow) {
-    quantityInput.setCustomValidity("Veuillez entrer une quantité supérieur à 0")
-    quantityInput.reportValidity()
-  } else {
-    quantityInput.setCustomValidity("")
-  }
-})
-
-// Conditions d'utilisation :
-
-conditionsInput.addEventListener("change", (event) => {
-  if (this.checked) {
-    conditionsInput.setCustomValidity("Veuillez accepter les conditions d'utilisation")
-    conditionsInput.reportValidity()
-  } else {
-    conditionsInput.setCustomValidity("")
-  }
-})
-
-
-// Fonction pour checker les valeurs du form
-
-function validate() {
-}
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -125,11 +130,15 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// Fermeture du formulaire
+// close modal event
 
 const closeBtn = document.getElementById('close')
+closeBtn.addEventListener("click", closeModal)
 
-closeBtn.addEventListener("click", event => {
+// close modal function
+
+function closeModal() {
   modalbg.style.display = "none"
-})
+
+}
 

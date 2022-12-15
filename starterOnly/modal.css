@@ -208,6 +208,13 @@ input {
   font-size: 20px;
   height: 48px;
 }
+.errorMessage {
+  color: #e54858;
+  font-size: 12px;
+  display: flex;
+  justify-content: left;
+  margin-bottom: 10px;
+}
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
