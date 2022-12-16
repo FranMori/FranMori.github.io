@@ -1,3 +1,4 @@
+// Fonction pour rendre le site responsive
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -12,7 +13,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
-// Récupération des inputs et des messages d'erreurs
+// Récupération des inputs et des messages d'erreurs et créations d'objets
 const firstNameInput = document.getElementById('first')
 const lastNameInput = document.getElementById('last')
 const emailInput = document.getElementById('email')
@@ -116,9 +117,6 @@ submitBtn.addEventListener("click", (event) => {
       closeModal()
     }
   }
-  // if ((errorObject.firstError.textContent = "") && (errorObject.lastError.textContent = "") && (errorObject.emailError.textContent = "") && (errorObject.dateError.textContent = "") && (errorObject.quantityError.textContent = "") && (errorObject.radioError.textContent = "") && (errorObject.conditionsError.textContent = "")) {
-  //   alert("Merci pour votre inscription !")
-  // }
 })
 
 
