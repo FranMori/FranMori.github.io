@@ -150,6 +150,8 @@ function launchModal() {
 const closeBtn = document.getElementById('close')
 closeBtn.addEventListener("click", closeModal)
 
+const closeForm = document.getElementById('closeForm')
+closeForm.addEventListener("click", closeModal)
 // close modal function
 
 function closeModal() {
