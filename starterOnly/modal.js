@@ -123,12 +123,19 @@ submitBtn.addEventListener("click", (event) => {
  
   console.log(data)
   if (data.length == 7) {
-    if (window.confirm("Merci pour votre inscription !")) {
-      closeModal()
-    }
+    validatedModal()
   }
 })
 
+// validated function
+
+const modalDisplay = document.getElementById('modal-display')
+const validatedDisplay = document.getElementById('valitaded-modal')
+
+function validatedModal () {
+  modalDisplay.style.display = "none"
+  validatedDisplay.style.display = "block"
+}
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));

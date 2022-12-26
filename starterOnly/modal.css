@@ -126,6 +126,16 @@ main {
   border-radius: 1rem;
   cursor: pointer;
 }
+#valitaded-modal {
+  display: none;
+}
+
+#valitaded-modal h2 {
+  margin-top: 70%;
+  margin-bottom: 70%;
+  text-align: center;
+  
+}
 
 .modal-btn:hover {
   background: #3876ac;
