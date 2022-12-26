@@ -50,6 +50,11 @@ const errorObject = {
   conditionsError : conditionsError
 }
 
+// Calcul de l'année actuelle pour le champ date
+let today = new Date()
+let  curentYear = today.getFullYear();
+console.log(curentYear -3 )
+
 
 // Ajout d'un event listener sur le bouton submit pour checker les valeurs du form
 let data = []
@@ -76,9 +81,14 @@ submitBtn.addEventListener("click", (event) => {
     data.push(formObject.email.value)
 
   }
+
   if (formObject.date.value.length == 0) {
     errorObject.dateError.textContent = "Veuillez entrer une date de naissance valide"
-  } else {
+
+  } else if (parseInt(formObject.date.value.split("-")[0]) > curentYear - 3 ) {
+    errorObject.dateError.textContent = "Vous devez avoir 3ans ou plus pour participer à nos événements"
+  }
+  else {
     errorObject.dateError.textContent = ""
     data.push(formObject.date.value)
 
