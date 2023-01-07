@@ -74,7 +74,7 @@ submitBtn.addEventListener("click", (event) => {
     errorObject.lastError.textContent = ""
     data.push(formObject.last.value)
   }
-  if (!formObject.email.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+  if (!formObject.email.value.match(/^[-.\w]+@(?![^.]{0,2}\.[a-zA-Z]{2,}$)([-a-zA-Z0-9]+\.)+[a-zA-Z]{2,}$/)) {
     errorObject.emailError.textContent = "Veuillez entrer une adresse email valide"
   } else {
     errorObject.emailError.textContent = ""
@@ -135,6 +135,7 @@ const validatedDisplay = document.getElementById('valitaded-modal')
 function validatedModal () {
   modalDisplay.style.display = "none"
   validatedDisplay.style.display = "block"
+  data = []
 }
 
 // launch modal event
@@ -156,6 +157,7 @@ closeForm.addEventListener("click", closeModal)
 
 function closeModal() {
   modalbg.style.display = "none"
+  window.location.reload(true)
 
 }
 
